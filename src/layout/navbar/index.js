@@ -8,7 +8,7 @@ export default () => (
         <NavbarBrand href="/"><img src={logo} className="logo" alt="logo" /></NavbarBrand>
         <Nav className="ml-md-auto d-md-flex pr-4" navbar>
             <NavItem>
-                <NavLink href="/"><div className="items">6</div> Items</NavLink>
+                <NavLink href="/checkout/step-2"><div className="items">6</div> Items</NavLink>
             </NavItem>
         </Nav>
     </Navbar>

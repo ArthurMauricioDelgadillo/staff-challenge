@@ -4,16 +4,16 @@ $card-border-width: 0;
 @import "bootstrap/scss/grid";
 @import "bootstrap/scss/buttons";
 
-input { 
-    text-align: center; 
-}
-
 .product {
     padding: 1rem 2rem;
-}
 
-.product img {
-    height: 200px;
+    input { 
+        text-align: center; 
+    }
+
+    img {
+        height: 200px;
+    }
 }
 
 .quantity {
