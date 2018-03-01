@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 
 import Client from '../client'
 import Costs from '../costs'
-import { addClient, fetchProducts } from './actions'
+import { addClient, fetchProducts, addToOrder } from './actions'
 
 import './index.css';
 
@@ -16,6 +16,10 @@ class Step1 extends Component {
     this.props.dispatch(
       fetchProducts("https://my-project-fzpynewkef.now.sh/")
     )
+  }
+  
+  addToOrder = (quantity, productId) => {
+    this.props.dispatch(addToOrder(quantity, productId))
   }
 
   render() {
@@ -32,7 +36,7 @@ class Step1 extends Component {
               {
                 error? <div>Error: {error}</div>:
                 loading? <div>Loading...</div>:
-                  <Products products={products}/>
+                  <Products products={products} addToOrder={this.addToOrder}/>
               }
             </div>
           </div>

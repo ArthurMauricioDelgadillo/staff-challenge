@@ -6,12 +6,14 @@ import registerServiceWorker from './registerServiceWorker';
 
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
-import promiseMiddleware  from 'redux-promise-middleware'
+
 import combinedReducer from './pages/checkout/step-1/reducers'
+import promiseMiddleware  from 'redux-promise-middleware'
+import logger from 'redux-logger'
 
 const store = createStore(
     combinedReducer, 
-    applyMiddleware(promiseMiddleware())
+    applyMiddleware(promiseMiddleware(), logger)
 )
 
 window.store = store

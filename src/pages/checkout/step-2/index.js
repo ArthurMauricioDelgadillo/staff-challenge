@@ -7,38 +7,13 @@ import { soles } from '../money'
 
 import { connect } from 'react-redux'
 
-const order = {
-    lines: [
-        {
-            product: {    
-                "id": 1,
-                "image": "http://www.telegraph.co.uk/content/dam/food-and-drink/2017/01/04/coffeeS006G8_wwwAlamycom_Heart-shaped-coffee-art-on-a-latte_trans_NvBQzQNjv4BqEDjTm7JpzhSGR1_8ApEWQA1vLvhkMtVb21dMmpQBfEs.jpg?imwidth=450",
-                "name": "Cafe Tostado",
-                "price": "30.45",
-            },
-            quantity: 2
-        },
-        {
-            product: {         
-                "id": 2,
-                "image": "https://www.comedera.com/wp-content/uploads/2016/10/sopa-de-fideos.jpg",
-                "name": "Fideos",
-                "price": "12.45",
-            },
-            quantity: 3
-        }
-    ],
-}
-
-const subTotal = line => line.quantity * line.product.price
-
-let Step2 = ({ client }) => 
+let Step2 = ({ client, orderLines }) => 
     <div>
         <h1>paso 2</h1>
         <section className="client row">
             <div className="col">
                 <h3>Resumen</h3>
-                {order.lines.map(line => 
+                {orderLines.map(line => 
                     <div className="product row" key={line.product.id}>
                         <div className="col-9 media">
                             <img className="mr-3" src={line.product.image} alt={line.product.name}/>
@@ -70,9 +45,21 @@ let Step2 = ({ client }) =>
         </section>
     </div>
 
+
+const subTotal = line => line.quantity * line.product.price
+
+const getOrderLines = (orderL, products) => 
+    orderL.map(x => 
+        ({
+            quantity: x.quantity,
+            product: products.find(p => p.id === x.productId)
+        }))
+
+
 const mapStateToProps = state => {
     return {
-      client: state.client
+      client: state.client,
+      orderLines: getOrderLines(state.order, state.products.products)
     }
   }
 
