@@ -5,11 +5,9 @@ import Client from '../client'
 import Costs from '../costs'
 import { soles } from '../money'
 
+import { connect } from 'react-redux'
+
 const order = {
-    client: {
-        name: 'Arthur Mauricio Delgadillo',
-        dni: '73646447'
-    },
     lines: [
         {
             product: {    
@@ -34,7 +32,7 @@ const order = {
 
 const subTotal = line => line.quantity * line.product.price
 
-export default () => 
+let Step2 = ({ client }) => 
     <div>
         <h1>paso 2</h1>
         <section className="client row">
@@ -62,8 +60,8 @@ export default () =>
             <div className="col">
                 <h3>Datos del cliente</h3>
                 <Client gray
-                    name={<p>{order.client.name}</p>}
-                    dni={<p>{order.client.dni}</p>}
+                    name={<p>{client.name}</p>}
+                    dni={<p>{client.dni}</p>}
                 />
             </div>
         </section>
@@ -71,3 +69,11 @@ export default () =>
             <Costs />
         </section>
     </div>
+
+const mapStateToProps = state => {
+    return {
+      client: state.client
+    }
+  }
+
+export default connect(mapStateToProps)(Step2)
