@@ -13,6 +13,7 @@ import './index.css';
 
 class Step1 extends Component {
   componentDidMount() {
+    this.props.fetched ||
     this.props.dispatch(
       fetchProducts("https://my-project-fzpynewkef.now.sh/")
     )

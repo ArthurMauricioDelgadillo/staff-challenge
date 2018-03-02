@@ -4,23 +4,17 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
+import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
+import configureStore from './configureStore' 
 
-import combinedReducer from './pages/checkout/step-1/reducers'
-import promiseMiddleware  from 'redux-promise-middleware'
-import logger from 'redux-logger'
-
-const store = createStore(
-    combinedReducer, 
-    applyMiddleware(promiseMiddleware(), logger)
-)
-
-window.store = store
+const { persistor, store } = configureStore()
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <PersistGate loading={null} persistor={persistor}>
+            <App />
+        </PersistGate>
     </Provider>,
     document.getElementById('root')
 );
