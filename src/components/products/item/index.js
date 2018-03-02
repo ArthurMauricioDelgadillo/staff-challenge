@@ -1,49 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Button } from 'reactstrap'
 import './index.css'
 
-export default class Item extends Component {
-  state = {
-    quantity: 0
+export default ({ id, image, name, stock, quantity, increment, decrement }) => {
+  const removeProduct = () => {
+    decrement(id, quantity)
   }
-  
-  increment = () => {
-    this.setState(
-      (prevState, props) => ({quantity: prevState.quantity + 1})
-    )
-  }
-  
-  decrement = () => {
-    this.setState(
-      (prevState, props) => ({quantity: prevState.quantity - 1})  
-    )
-  }
-  
-  addToOrder = () => {
-    const { quantity } = this.state
-    const { id, name } = this.props
-    alert(`Se ha agregado ${quantity} ${name} a su carrito :)`)
-    this.props.addToOrder(quantity, id) 
-  }
-  
-  render() {
-    const { image, name, stock } = this.props 
-    return (
-      <div className="product card">
-        <img className="card-img-top" src={image} alt={name} />
-        <div className="card-body">
-          <div className="quantity">
-            <Button {...{ disabled: this.state.quantity <= 0 }} 
-              onClick={this.decrement} >-</Button>
-            <input disabled type="text" value={this.state.quantity} />
-            <Button {...{ disabled: this.state.quantity >= stock }} 
-              onClick={this.increment}>+</Button>
-          </div>
-          <Button block {...{ disabled: this.state.quantity === 0 }}
-            color="primary" onClick={this.addToOrder}>ADD</Button>
-        </div>
-      </div>
-    )
-  }
-}
 
+  return (
+    <div className="product card">
+      <img className="card-img-top" src={image} alt={name} />
+      <div className="card-body">
+        <div className="quantity">
+          <Button {...{ disabled: quantity <= 0 }} 
+            onClick={() => decrement(id, 1)} >-</Button>
+          <input disabled type="text" value={quantity} />
+          <Button {...{ disabled: quantity >= stock }} 
+            onClick={() => increment(id, 1)}>+</Button>
+        </div>
+        {
+          quantity === 0?
+          <Button block color="primary" onClick={() => increment(id, 1)}>ADD</Button>:
+          <Button block color="primary" onClick={removeProduct}>REMOVE</Button>
+        }
+      </div>
+    </div>
+  )
+}

@@ -2,7 +2,9 @@ import axios from 'axios'
 
 export const ADD_CLIENT = 'ADD_CLIENT'
 export const FETCH_PRODUCTS = 'FETCH_PRODUCTS'
-export const ADD_TO_ORDER = 'ADD_TO_ORDER'
+
+export const INCREMENT = 'INCREMENT'
+export const DECREMENT = 'DECREMENT'
 
 export const addClient = (name, dni) => ({
   type: ADD_CLIENT,
@@ -17,10 +19,20 @@ export const fetchProducts = uri => ({
   payload: axios(uri)
 })
 
-export const addToOrder = (quantity, productId) => ({
-  type: ADD_TO_ORDER,
+export const increment = (productId, quantity) => ({
+  type: INCREMENT,
   payload: {
-    quantity,
-    productId
+    productId,
+    quantity
   }
 })
+
+
+export const decrement = (productId, quantity) => ({
+  type: DECREMENT,
+  payload: {
+    productId,
+    quantity
+  }
+})
+

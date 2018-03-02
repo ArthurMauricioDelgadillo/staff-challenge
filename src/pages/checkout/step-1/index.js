@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 
 import Client from '../client'
 import Costs from '../costs'
-import { addClient, fetchProducts, addToOrder } from './actions'
+import { addClient, fetchProducts, increment, decrement } from './actions'
 
 import './index.css';
 
@@ -18,12 +18,17 @@ class Step1 extends Component {
     )
   }
   
-  addToOrder = (quantity, productId) => {
-    this.props.dispatch(addToOrder(quantity, productId))
+  increment = (productId, quantity) => {
+    this.props.dispatch(increment(productId, quantity))
   }
+  
+  decrement = (productId, quantity) => {
+    this.props.dispatch(decrement(productId, quantity))
+  }
+  
 
   render() {
-    const { dispatch, error, loading, products } = this.props
+    const { dispatch, error, loading, products, orderLines } = this.props
     let nameRef, dniRef
 
     return (
@@ -36,7 +41,10 @@ class Step1 extends Component {
               {
                 error? <div>Error: {error}</div>:
                 loading? <div>Loading...</div>:
-                  <Products products={products} addToOrder={this.addToOrder}/>
+                  <Products products={products}
+                    increment={this.increment}
+                    decrement={this.decrement}
+                    orderLines={orderLines}/>
               }
             </div>
           </div>
@@ -76,7 +84,8 @@ class Step1 extends Component {
 }
 
 const mapStateToProps = state => ({
-  ...state.products
+  ...state.products,
+  orderLines: state.order
 })
 
 export default connect(mapStateToProps)(Step1)
